@@ -25,20 +25,13 @@ sha256sums=('SKIP')
 _cc=musl-gcc
 
 prepare() {
-    cd "busybox-${pkgver}"
+    cd "${srcdir}/busybox-${pkgver}"
     if ! command -v "${_cc}" >/dev/null 2>&1; then
         echo "!! [PREPARE] '${_cc}' not found - install the 'musl' package (provides musl-gcc)." >&2
         exit 1
     fi
-
     echo "--> [PREPARE] Generating BusyBox's full-featured default config...."
     make CC="${_cc}" defconfig
-
-    # NOTE: unlike the Linux kernel, BusyBox does NOT ship a scripts/config
-    # helper script - it only reuses kbuild's scripts/kconfig/ (conf/mconf
-    # binaries) for targets like defconfig/oldconfig/menuconfig. There's no
-    # standalone CLI tool to toggle individual symbols, so we edit .config
-    # directly instead.
     _set_config() {
         local sym="$1"
         if grep -q "^${sym}=" .config; then
@@ -49,7 +42,6 @@ prepare() {
             echo "${sym}=y" >> .config
         fi
     }
-
     echo "--> [PREPARE] Statically linking against musl, not glibc...."
     _set_config CONFIG_STATIC
     # "sh" applet: make it resolve to ash, matching what a bare `sh` on
@@ -60,18 +52,17 @@ prepare() {
     # find_device_by_tag()'s manual parser and our earlier debugging
     # session both depended on seeing in the plain `blkid` listing.
     _set_config CONFIG_FEATURE_BLKID_TYPE
-
     echo "--> [PREPARE] Resolving any newly-exposed sub-options to their defaults...."
     yes "" | make CC="${_cc}" oldconfig
 }
 
 build() {
-    cd "busybox-${pkgver}"
+    cd "${srcdir}/busybox-${pkgver}"
     make CC="${_cc}" -j$(nproc)
 }
 
 package() {
-    cd "busybox-${pkgver}"
+    cd "${srcdir}/busybox-${pkgver}"
     echo "--> [PACKAGE] Verifying the binary is actually statically linked...."
     if command -v ldd >/dev/null 2>&1 && ldd ./busybox 2>&1 | grep -qv "not a dynamic executable"; then
         echo "!! [PACKAGE] busybox appears to be dynamically linked - static build failed!" >&2
