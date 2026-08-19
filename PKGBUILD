@@ -25,7 +25,7 @@ sha256sums=('SKIP')
 _cc=musl-gcc
 
 prepare() {
-    cd "busybox-${pkgver}"
+    cd "${srcdir}/busybox-${pkgver}"
     if ! command -v "${_cc}" >/dev/null 2>&1; then
         echo "!! [PREPARE] '${_cc}' not found - install the 'musl' package (provides musl-gcc)." >&2
         exit 1
@@ -45,12 +45,12 @@ prepare() {
 }
 
 build() {
-    cd "busybox-${pkgver}"
+    cd "${srcdir}/busybox-${pkgver}"
     make CC="${_cc}" -j$(nproc)
 }
 
 package() {
-    cd "busybox-${pkgver}"
+    cd "${srcdir}/busybox-${pkgver}"
     echo "--> [PACKAGE] Verifying the binary is actually statically linked...."
     if command -v ldd >/dev/null 2>&1 && ldd ./busybox 2>&1 | grep -qv "not a dynamic executable"; then
         echo "!! [PACKAGE] busybox appears to be dynamically linked - static build failed!" >&2
