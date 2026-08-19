@@ -6,7 +6,7 @@
 pkgname=busybox
 pkgver=1.36.1
 pkgrel=1
-pkgdesc="Statically-linked BusyBox multi-call binary for the Liska Linux lkinit initramfs"
+pkgdesc="Statically-linked BusyBox multi-call binary for Liska Linux (used in the lkinit initramfs and as a general-purpose fallback toolset)"
 arch=('x86_64')
 url="https://www.busybox.net/"
 license=('GPL-2.0-only')
