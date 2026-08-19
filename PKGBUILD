@@ -33,10 +33,5 @@ build() {
 package() {
     cd "${srcdir}/${pkgname}-${pkgver}"
     install -Dm0755 busybox "${pkgdir}"/usr/bin/busybox
-    install -dm0755 "${pkgdir}"/usr/share/doc/${pkgname}
-    cp -a examples "${pkgdir}"/usr/share/doc/${pkgname}/
-    for doc in BusyBox.html BusyBox.txt; do
-        install -Dm644 docs/${doc} "${pkgdir}"/usr/share/doc/${pkgname}/${doc}
-    done
 }
 
