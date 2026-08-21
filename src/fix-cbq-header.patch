@@ -1,6 +1,6 @@
 --- a/networking/tc.c
 +++ b/networking/tc.c
-@@ -231,6 +231,25 @@
+@@ -231,3 +231,31 @@
  #define TCA_CBQ_MAX (__TCA_CBQ_MAX - 1)
  #endif
 
