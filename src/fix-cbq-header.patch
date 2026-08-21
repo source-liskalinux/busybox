@@ -5,7 +5,7 @@
  #endif
 
 +/* Legacy CBQ structures removed in Linux kernel 6.8+ */
-+#ifndef TCA_CBQ_MAX
++#ifndef TC_CBQ_MAXPRIO
 +struct tc_cbq_lssopt {
 +	unsigned char  change;
 +	unsigned char  flags;
