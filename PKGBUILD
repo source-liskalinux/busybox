@@ -23,12 +23,12 @@ sha256sums=('SKIP'
 prepare() {
     cd "${srcdir}/${pkgname}-${pkgver}"
     patch -p1 < "${srcdir}"/extra_version.patch
-    patch -p1 < "${srcdir}"/fix-cbq-header.patch
 }
 
 build() {
     cd "${srcdir}/${pkgname}-${pkgver}"
     cp "${srcdir}/config" .config
+    sed -i 's|CONFIG_TC=y|# CONFIG_TC is not set|g' .config
     export KCONFIG_NOTIMESTAMP=1
     make CC=musl-gcc BB_EXTRA_VERSION="-${pkgrel}"
 }
