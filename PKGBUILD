@@ -10,7 +10,7 @@ pkgdesc="Utilities for rescue and embedded systems"
 arch=("x86_64")
 url="https://www.busybox.net"
 license=('GPL-2.0-only')
-makedepends=("ncurses" "musl" "kernel-headers-musl")
+makedepends=("ncurses" "musl" "kernel-headers-musl" "patch" "make")
 source=("${url}/downloads/${pkgname}-${pkgver}.tar.bz2"
         "https://gitlab.archlinux.org/archlinux/packaging/packages/busybox/-/raw/main/config"
         "https://gitlab.archlinux.org/archlinux/packaging/packages/busybox/-/raw/main/extra_version.patch")
