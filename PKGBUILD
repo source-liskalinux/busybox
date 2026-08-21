@@ -21,6 +21,7 @@ sha256sums=('SKIP'
 prepare() {
     cd "${srcdir}/${pkgname}-${pkgver}"
     patch -p1 < "${srcdir}"/extra_version.patch
+    patch -p1 < "${srcdir}"/fix-cbq-header.patch
 }
 
 build() {
